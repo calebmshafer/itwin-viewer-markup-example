@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 
 import AuthorizationClient from "./AuthorizationClient";
 import { Header } from "./Header";
+import { MarkupToolbarProvider } from "./MarkupToolbar";
+import { MarkupApp } from "@bentley/imodeljs-markup";
 
 const App: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState(
@@ -61,6 +63,10 @@ const App: React.FC = () => {
     setIsAuthorized(false);
   };
 
+  const handleOnIModelAppInit = async () => {
+    await MarkupApp.initialize();
+  };
+
   return (
     <div className="viewer-container">
       <Header
@@ -76,6 +82,10 @@ const App: React.FC = () => {
             contextId={process.env.IMJS_CONTEXT_ID ?? ""}
             iModelId={process.env.IMJS_IMODEL_ID ?? ""}
             authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
+            uiProviders={[
+              new MarkupToolbarProvider()
+            ]}
+            onIModelAppInit={handleOnIModelAppInit}
           />
         )
       )}
