@@ -24,6 +24,7 @@ class AuthorizationClient {
 
     // authority is optional and will default to Production IMS
     const oidcConfiguration: BrowserAuthorizationClientConfiguration = {
+      authority: "https://imsoidc.bentley.com",
       clientId,
       redirectUri,
       postSignoutRedirectUri,

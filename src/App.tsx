@@ -3,10 +3,12 @@ import "./App.scss";
 import { Viewer } from "@bentley/itwin-viewer-react";
 import React, { useEffect, useState } from "react";
 
-import AuthorizationClient from "./AuthorizationClient";
+import AuthorizationClient from "./clients/AuthorizationClient";
 import { Header } from "./Header";
 import { MarkupToolbarProvider } from "./MarkupToolbar";
 import { MarkupApp } from "@bentley/imodeljs-markup";
+import APIMAuthClient from "./clients/APIMAuthClient";
+import { IssuesProvider } from "./IssuesWidget";
 
 const App: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState(
@@ -21,10 +23,14 @@ const App: React.FC = () => {
       if (!AuthorizationClient.oidcClient) {
         await AuthorizationClient.initializeOidc();
       }
+      if (!APIMAuthClient.oidcClient){
+        await APIMAuthClient.initializeOidc();
+      }
 
       try {
         // attempt silent signin
         await AuthorizationClient.signInSilent();
+        await APIMAuthClient.signInSilent();
         setIsAuthorized(AuthorizationClient.oidcClient.isAuthorized);
       } catch (error) {
         // swallow the error. User can click the button to sign in
@@ -55,11 +61,13 @@ const App: React.FC = () => {
   const onLoginClick = async () => {
     setIsLoggingIn(true);
     await AuthorizationClient.signIn();
+    await APIMAuthClient.signIn();
   };
 
   const onLogoutClick = async () => {
     setIsLoggingIn(false);
     await AuthorizationClient.signOut();
+    await APIMAuthClient.signOut();
     setIsAuthorized(false);
   };
 
@@ -83,7 +91,8 @@ const App: React.FC = () => {
             iModelId={process.env.IMJS_IMODEL_ID ?? ""}
             authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
             uiProviders={[
-              new MarkupToolbarProvider()
+              new MarkupToolbarProvider(),
+              new IssuesProvider(process.env.IMJS_CONTEXT_ID ?? ""),
             ]}
             onIModelAppInit={handleOnIModelAppInit}
           />
