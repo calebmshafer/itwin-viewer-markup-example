@@ -22,7 +22,7 @@ class APIMAuthClient {
     const redirectUri = process.env.IMJS_AUTH_CLIENT_REDIRECT_URI ?? "";
     const postSignoutRedirectUri = process.env.IMJS_AUTH_CLIENT_LOGOUT_URI;
 
-    // authority is optional and will default to Production IMS
+    // authority ims.bentley.com to use public APIs
     const oidcConfiguration: BrowserAuthorizationClientConfiguration = {
       authority: "https://ims.bentley.com",
       clientId,

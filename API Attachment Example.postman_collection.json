@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "66a53536-93a9-48ca-a348-9ec5f4fd415d",
+		"name": "API Attachment Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add attachment to issue",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fileName\": \"DesignReview_Markup.png\",\r\n    \"caption\": \"Optional description\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.bentley.com/issues/:id/attachments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bentley",
+						"com"
+					],
+					"path": [
+						"issues",
+						":id",
+						"attachments"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload attachment file",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/D:/Documents/Forms Viewer/Attachments/HalfCity.png"
+					}
+				},
+				"url": {
+					"raw": "https://api.bentley.com/issues/:id/attachments/:attachmentId",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bentley",
+						"com"
+					],
+					"path": [
+						"issues",
+						":id",
+						"attachments",
+						":attachmentId"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						},
+						{
+							"key": "attachmentId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

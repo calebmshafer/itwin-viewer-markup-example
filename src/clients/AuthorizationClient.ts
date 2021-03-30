@@ -22,7 +22,7 @@ class AuthorizationClient {
     const redirectUri = process.env.IMJS_AUTH_CLIENT_REDIRECT_URI ?? "";
     const postSignoutRedirectUri = process.env.IMJS_AUTH_CLIENT_LOGOUT_URI;
 
-    // authority is optional and will default to Production IMS
+    // authority is imsoidc.bentley.com to use Bentley internal APIs
     const oidcConfiguration: BrowserAuthorizationClientConfiguration = {
       authority: "https://imsoidc.bentley.com",
       clientId,
