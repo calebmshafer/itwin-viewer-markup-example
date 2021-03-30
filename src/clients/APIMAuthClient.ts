@@ -5,7 +5,7 @@ import {
 } from "@bentley/frontend-authorization-client";
 import { FrontendRequestContext } from "@bentley/imodeljs-frontend";
 
-class AuthorizationClient {
+class APIMAuthClient {
   private static _oidcClient: BrowserAuthorizationClient;
 
   public static get oidcClient(): BrowserAuthorizationClient {
@@ -22,8 +22,9 @@ class AuthorizationClient {
     const redirectUri = process.env.IMJS_AUTH_CLIENT_REDIRECT_URI ?? "";
     const postSignoutRedirectUri = process.env.IMJS_AUTH_CLIENT_LOGOUT_URI;
 
-    // authority is optional and will default to Production IMS
+    // authority ims.bentley.com to use public APIs
     const oidcConfiguration: BrowserAuthorizationClientConfiguration = {
+      authority: "https://ims.bentley.com",
       clientId,
       redirectUri,
       postSignoutRedirectUri,
@@ -51,4 +52,4 @@ class AuthorizationClient {
   }
 }
 
-export default AuthorizationClient;
+export default APIMAuthClient;
